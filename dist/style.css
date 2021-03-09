@@ -1,0 +1,122 @@
+html,body{
+    margin: 0;
+    height: 100%;
+    /*get a good font*/
+    font-family: sans-serif;
+}
+
+#page-wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+
+header{
+    text-align: center;
+    line-height: 2;
+    font-size: 25pt;
+    border-bottom: 1pt solid black;
+}
+#main-content{
+    flex: 1;
+    background-color: lightgreen;
+    display: flex;
+    flex-wrap: wrap;
+}
+#site-introduction-container{
+    background-color: lightblue;
+    width: 100%;
+}
+#site-introduction-text{
+    text-align: center;
+    margin: 20px 10px;
+}
+#form-header{
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+    font-size: 16pt;
+    display: flex;
+    justify-content: space-around;
+}
+#form-container{
+    background-color: lightcoral;
+    width: 100%;
+}
+#form-sub-container{
+    width: 220px;
+    height: 240px;
+    position: relative;
+    top: calc(10%);
+    left: calc(50% - 150px);
+    padding: 0 40px;
+    /* padding-top: 20px; */
+    border: 1px solid black;
+}
+#signup-form{
+    display: none;
+    height: 100px;
+}
+#signup-tab{
+    width: 100%;
+    text-align: center;
+    line-height: 2;
+}
+#signup-tab:hover{
+    cursor: pointer;
+}
+#login-form{
+    height: 100px;
+}
+#login-tab{
+    background-color: lightgrey;
+    width: 100%;
+    text-align: center;
+    line-height: 2;
+}
+#login-tab:hover{
+    cursor: pointer;
+}
+#login-submit-btn{
+    display: block;
+    margin: 0 auto;
+}
+#signup-submit-btn{
+    display: block;
+    margin: 0 auto;
+}
+.form-item{
+    margin-bottom: 5px;
+    width: calc(100% - 10px);
+}
+
+footer{
+    text-align: center;
+    line-height: 2;
+}
+
+@media only screen and (min-width: 961px) {
+    #site-introduction-container{
+        width: 60%;
+    }
+    #site-introduction-text{
+        /* width: 40%; */
+        /* height: 200px; */
+        /* position: absolute; */
+        margin: 0;
+        /* top: calc(50% - 200px); */
+        /* left: calc(25% - 225px); */
+
+    }
+    #form-container{
+        width: 40%;
+    }
+    #form-sub-container{
+        position: relative;
+        top: calc(25% - 50px);
+        left: calc(50% - 150px);
+    }
+}

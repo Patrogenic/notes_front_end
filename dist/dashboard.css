@@ -1,0 +1,57 @@
+#main-content{
+    
+}
+
+#folders-sidebar{
+    width: 25%;
+    height: 100%;
+    background-color: lightcoral;
+}
+#folders-sidebar-header{
+    text-align: center;
+}
+.folder{
+    cursor: pointer;
+}
+
+#notes-container{
+    width: 75%;
+    height: 100%;
+    background-color: lightseagreen;
+}
+#notes-container-header{
+    text-align: center;
+}
+.notes-sub-container{
+    display: none;
+}
+#notes-sub-container0{
+    display: block;
+}
+#new-folder-popup-wrapper{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+}
+#new-folder-popup{
+    /* display: none; */
+    position: fixed;
+    background-color: darkolivegreen;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+}
+
+@media only screen and (min-width: 961px) {
+/*TODO: folders sidebar will collapse when the screen is thin enough*/
+
+    #new-folder-popup{
+        /* display: none; */
+        position: fixed;
+        width: 860px;
+        left: calc(50% - 430px);
+    }
+}

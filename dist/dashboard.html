@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>TODO List</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='dashboard.css'>
+</head>
+<body>
+    <div id="page-wrapper">
+        <header>TODO List</header>
+        <div id="main-content">
+            <div id="folders-sidebar">
+                <div id="folders-sidebar-header">Folders Container</div>
+                <button id="open-new-folder-form">New Folder</button>
+                <div id="folders-container"></div>
+                <!-- <div id="new-folder-form-container">
+                    <form id="new-folder-form">
+                        <input type="submit" value="New Folder">
+                    </form>
+                </div> -->
+            </div>
+            <div id="notes-container">
+                <div id="notes-container-header">Notes Container</div> <!--The current folder name might go here-->
+            </div>
+        </div>
+        <div id="new-folder-popup-wrapper">
+            <div id="new-folder-popup">
+                <div id="new-folder-header">New Folder</div>
+                <form id="new-folder-form">
+                    <label for="new-folder-name">Folder name: </label><br>
+                    <input type="text" name="new-folder-name" id="new-folder-name-field" class="form-item"><br>
+                    <label for="new-folder-description">Folder description: </label><br>
+                    <textarea name="new-folder-description" id="new-folder-description-field" class="form-item"></textarea><br>
+                    <input type="submit" value="Submit" id="new-folder-submit-btn">
+                </form>
+                <button id="close-new-folder-popup">Close</button>
+            </div>
+        </div>
+        <footer><a href=''>GitHub</a></footer>
+    </div>
+
+    <script src='main.js'></script>
+</body>
+</html>
