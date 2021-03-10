@@ -6,7 +6,7 @@ const BASE_URL = 'http://localhost:3000'; //development url
 const PATH = '/dist/';
 
 //I will have to put the update functions into some kind of wrapper so they can pull data from the form
-let http = {updateFolderData, deleteFolder, updateNoteData, deleteNote};
+let http = {updateFolderData, deleteFolder, updateNoteData, deleteNote, sendNewNoteData};
 
 //handling logout seems to be a client side thing in which all I have to do is clear the token in localStorage
 let userData = new UserData();
@@ -112,34 +112,42 @@ async function getAllFoldersData(){
 async function sendNewFolderData(url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
-    if(data.name != undefined){ //valid object returned
-        userInterface.addFolder(data);
+    if(data.name !== undefined){ //valid object returned
+        userInterface.addFolder(data, http);
     }else{
         //tell the user there was some kind of error
         //'Error: failed to add note'
     }
 }
 // let data = await userData.sendData(BASE_URL + '/api/folder/604450a26ad6b825957242ea', 'put', {name, description}, data => {return data});
-async function updateFolderData(url, method, parameters, callback){
+async function updateFolderData(folderIndex, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
+    if(data.name !== undefined){
+        //successful edit
+        userInterface.updateFolder(folderIndex, data);
+    }else{
+        console.log('edit was not successful');
+    }
 }
 // let data = await userData.sendData(BASE_URL + '/api/folder/:id', 'delete', {}, data => {return data});
-async function deleteFolder(url, method, parameters, callback){
+async function deleteFolder(e, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
     if(data.message.localeCompare('success') !== 0){
-        //report that there was an error deleting
-        //remove folder visually
-        //implement edit button
-        //do delete and button for each note (expanded screen probably)
+        console.log('error deleting');
+    }else{
+        userInterface.deleteFolder(e);
     }
 }
 
 // sendNewNoteData(BASE_URL + '/api/folder/604450a26ad6b825957242ea/note', 'post', {name, description}, data => {return data});
-async function sendNewNoteData(url, method, parameters, callback){
+async function sendNewNoteData(folderIndex, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
+    if(data.name !== undefined){
+        userInterface.addNote(data, folderIndex);
+    }
 }
 // updateNoteData(BASE_URL + '/api/folder/note/:id', 'put', {name, description}, data => {return data});
 async function updateNoteData(url, method, parameters, callback){

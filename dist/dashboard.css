@@ -28,15 +28,14 @@
 #notes-sub-container0{
     display: block;
 }
-#new-folder-popup-wrapper{
+.popup-wrapper{
     position: fixed;
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.5);
     display: none;
 }
-#new-folder-popup{
-    /* display: none; */
+.popup{
     position: fixed;
     background-color: darkolivegreen;
     width: 90%;
@@ -44,14 +43,32 @@
     top: 5%;
     left: 5%;
 }
+/* #new-folder-popup-wrapper{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    display: none;
+}
+#new-folder-popup{
+    position: fixed;
+    background-color: darkolivegreen;
+    width: 90%;
+    height: 90%;
+    top: 5%;
+    left: 5%;
+} */
 
 @media only screen and (min-width: 961px) {
 /*TODO: folders sidebar will collapse when the screen is thin enough*/
-
-    #new-folder-popup{
-        /* display: none; */
+    .popup{
         position: fixed;
         width: 860px;
         left: calc(50% - 430px);
     }
+    /* #new-folder-popup{
+        position: fixed;
+        width: 860px;
+        left: calc(50% - 430px);
+    } */
 }

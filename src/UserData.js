@@ -6,7 +6,7 @@ class UserData{
     }
 
     //gets all folders and the notes inside the folders
-    //this is doing nothing
+        //this is doing nothing
     getAllFolders(){
         const localstorage_user = JSON.parse(localStorage.getItem('user'));
         const inMemoryToken = localstorage_user.token;
@@ -58,6 +58,7 @@ class UserData{
     sendData(url, method, parameters, callback){
         const localstorage_user = JSON.parse(localStorage.getItem('user'));
         const inMemoryToken = localstorage_user.token;
+        console.log('url: ' + url);
 
         return (fetch(url, {
             method: method,

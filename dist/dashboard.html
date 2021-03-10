@@ -10,7 +10,7 @@
 </head>
 <body>
     <div id="page-wrapper">
-        <header>TODO List</header>
+        <header>UrNotes</header>
         <div id="main-content">
             <div id="folders-sidebar">
                 <div id="folders-sidebar-header">Folders Container</div>
@@ -26,8 +26,8 @@
                 <div id="notes-container-header">Notes Container</div> <!--The current folder name might go here-->
             </div>
         </div>
-        <div id="new-folder-popup-wrapper">
-            <div id="new-folder-popup">
+        <div id="new-folder-popup-wrapper" class='popup-wrapper'>
+            <div id="new-folder-popup" class="popup">
                 <div id="new-folder-header">New Folder</div>
                 <form id="new-folder-form">
                     <label for="new-folder-name">Folder name: </label><br>
@@ -37,6 +37,32 @@
                     <input type="submit" value="Submit" id="new-folder-submit-btn">
                 </form>
                 <button id="close-new-folder-popup">Close</button>
+            </div>
+        </div>
+        <div id="update-folder-popup-wrapper" class='popup-wrapper'>
+            <div id="update-folder-popup" class="popup">
+                <div id="update-folder-header">Update Folder</div>
+                <form id="update-folder-form">
+                    <label for="update-folder-name">Folder name: </label><br>
+                    <input type="text" name="update-folder-name" id="update-folder-name-field" class="form-item"><br>
+                    <label for="update-folder-description">Folder description: </label><br>
+                    <textarea name="update-folder-description" id="update-folder-description-field" class="form-item"></textarea><br>
+                    <input type="submit" value="Submit" id="update-folder-submit-btn">
+                </form>
+                <button id="close-update-folder-popup">Close</button>
+            </div>
+        </div>
+        <div id="new-note-popup-wrapper" class='popup-wrapper'>
+            <div id="new-note-popup" class="popup">
+                <div id="new-note-header">New note</div>
+                <form id="new-note-form">
+                    <label for="new-note-name">Note name: </label><br>
+                    <input type="text" name="new-note-name" id="new-note-name-field" class="form-item"><br>
+                    <label for="new-note-description">Note description: </label><br>
+                    <textarea name="new-note-description" id="new-note-description-field" class="form-item"></textarea><br>
+                    <input type="submit" value="Submit" id="new-note-submit-btn">
+                </form>
+                <button id="close-new-note-popup">Close</button>
             </div>
         </div>
         <footer><a href=''>GitHub</a></footer>
