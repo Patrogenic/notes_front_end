@@ -135,7 +135,7 @@ async function deleteFolder(e, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
     if(data.message.localeCompare('success') !== 0){
-        console.log('error deleting');
+        console.log('error deleting folder');
     }else{
         userInterface.deleteFolder(e);
     }
@@ -147,15 +147,28 @@ async function sendNewNoteData(folderIndex, url, method, parameters, callback){
     console.log(data);
     if(data.name !== undefined){
         userInterface.addNote(data, folderIndex);
+    }else{
+        console.log('error creating note');
     }
 }
 // updateNoteData(BASE_URL + '/api/folder/note/:id', 'put', {name, description}, data => {return data});
-async function updateNoteData(url, method, parameters, callback){
+async function updateNoteData(elementId, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
+    if(data.name !== undefined){
+        userInterface.updateNote(data, elementId)
+    }else{
+        console.log('error saving data');
+    }
 }
 // deleteNote(BASE_URL + '/api/folder/note/:id', 'delete', {}, data => {return data});
-async function deleteNote(url, method, parameters, callback){
+async function deleteNote(elementId, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
+    if(data.message.localeCompare('success') !== 0){
+        console.log('error deleting note');
+    }else{
+        userInterface.deleteNote(elementId);
+    }
+
 }

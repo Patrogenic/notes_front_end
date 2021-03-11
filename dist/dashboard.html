@@ -65,6 +65,22 @@
                 <button id="close-new-note-popup">Close</button>
             </div>
         </div>
+        <div id="show-note-popup-wrapper" class='popup-wrapper'>
+            <div id="show-note-popup" class="popup">
+                <div id="show-note-header">show note</div>
+                <form id="edit-note-form">
+                    <label for="show-note-name">Note name: </label><br>
+                    <input type="text" name="show-note-name" id="show-note-name-field" class="form-item"><br>
+                    <label for="show-note-description">Note description: </label><br>
+                    <textarea name="show-note-description" id="show-note-description-field" class="form-item"></textarea><br>
+                    <input type="submit" value="Save Changes" id="edit-note-submit-btn">
+                </form>
+                <form id="delete-note-form">
+                    <input type="submit" value="Delete" id="delete-note-submit-btn">
+                </form>
+                <button id="close-show-note-popup">Close</button>
+            </div>
+        </div>
         <footer><a href=''>GitHub</a></footer>
     </div>
 

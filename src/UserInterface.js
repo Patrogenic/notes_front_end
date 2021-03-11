@@ -33,7 +33,6 @@ class UserInterface{
         let foldersContainer = document.getElementById('folders-container');
         let notesContainer = document.getElementById('notes-container');
 
-
         let folderEl = document.createElement('div');
 
         //the ids of the folders and notes will have to be stored somewhere
@@ -47,30 +46,14 @@ class UserInterface{
 
             //this might be able to go back into the function below
             this.buildNotesContainer(data[i], i, http);
-            
-            
-            /*
-                add an event listener to display the notes for this folder and
-                hide all other notes
-                display: block for the notes in this folder, and
-                display: none for all other notes
-
-                on each note group element, I can have a button that adds notes
-                to the currently selected folder
-                --this will probably simplify things
-
-                I still need a create folder button though
-            */
         }
-
-
     }
     addFolder(folderData, http){
         document.getElementById('new-folder-popup-wrapper').style.display = 'none';
 
         let foldersContainer = document.getElementById('folders-container');
         let folderEl = document.createElement('div');
-        let folderIndex = foldersContainer.childNodes.length;
+        let folderIndex = foldersContainer.childNodes.length + 1;
         
         folderEl.innerHTML = folderData.name;
         folderEl.id = 'folder' + folderIndex;
@@ -78,14 +61,9 @@ class UserInterface{
         folderEl.addEventListener('click', this.toggleCurrentFolder);
         foldersContainer.appendChild(folderEl);
 
-        
         this.buildNotesContainer(folderData, folderIndex, http);
-
-
     }
     deleteFolder(e){
-        console.log('event: ' + e.srcElement.id);
-        // let id = e.srcElement
         let folderEl = document.getElementById('folder' + e.srcElement.id);
         let notesSubContainer = document.getElementById('notes-sub-container' + e.srcElement.id);
 
@@ -102,6 +80,10 @@ class UserInterface{
         document.getElementById('folder-name-notes-container' + folderIndex).innerHTML = folderData.name;
         document.getElementById('folder-description-notes-container' + folderIndex).innerHTML = folderData.description;
 
+        document.getElementById('update-folder-name-field').value = folderData.name;
+        document.getElementById('update-folder-description-field').value = folderData.description;
+
+
     }
     //add edit and delete buttons here
     //give each note a css class
@@ -113,6 +95,16 @@ class UserInterface{
         
         noteEl.innerHTML = noteData.name;
         notesSubContainer.appendChild(noteEl);
+    }
+    updateNote(noteData, elementId){
+        document.getElementById(elementId + 'name').innerHTML = noteData.name;
+        document.getElementById(elementId + 'description').innerHTML = noteData.description;
+
+        console.log('changes saved'); //TODO create element for this
+    }
+    deleteNote(elementId){
+        document.getElementById(elementId).remove();
+        document.getElementById('close-show-note-popup').click();
     }
     //I should probably make including a name of the note optional
     buildNotesContainer(folderData, folderIndex, http){ //this might be used to create just one container at a time
@@ -138,16 +130,22 @@ class UserInterface{
 
         notesSubContainer.appendChild(folderDescription);
 
-        let noteEl = document.createElement('div');
+        //this only needs to called once somewhere
+        //not sure where to put it, maybe the constructor
+        document.getElementById('close-show-note-popup')
+        .addEventListener('click', () => {
+            document.getElementById('show-note-popup-wrapper').style.display = 'none';
 
-        //I have to build the name and description of the note
-        //add edit and delete buttons here
-        //give each note a css class
+            //remove event listeners when closing window
+            document.getElementById('edit-note-submit-btn').outerHTML = document.getElementById('edit-note-submit-btn').outerHTML;
+            document.getElementById('delete-note-form').outerHTML = document.getElementById('delete-note-form').outerHTML;
+
+        });
+
+    
         if(folderData.notes != undefined){
             for (let i = 0; i < folderData.notes.length; i++) {
-                noteEl.innerHTML = folderData.notes[i].name;
-                notesSubContainer.appendChild(noteEl);
-                noteEl = document.createElement('div');            
+                notesSubContainer.appendChild(this.buildNoteElement(folderData, folderIndex, http, i));         
             }
         }
         notesContainer.appendChild(notesSubContainer);
@@ -168,8 +166,8 @@ class UserInterface{
 
         //expand note to edit
         editBtn.addEventListener('click', () => {
-            document.getElementById('update-folder-name-field').value = folderData.name;
-            document.getElementById('update-folder-description-field').value = folderData.description;
+            document.getElementById('update-folder-name-field').value = document.getElementById('folder-name-notes-container' + folderIndex).innerHTML;
+            document.getElementById('update-folder-description-field').value = document.getElementById('folder-description-notes-container' + folderIndex).innerHTML;
             document.getElementById('update-folder-popup-wrapper').style.display = 'block';
 
             document.getElementById('update-folder-form')
@@ -214,6 +212,7 @@ class UserInterface{
 
         })
 
+        //this only needs to be called once somewhere
         document.getElementById('close-new-note-popup')
         .addEventListener('click', () => {
             document.getElementById('new-note-popup-wrapper').style.display = 'none';
@@ -221,6 +220,48 @@ class UserInterface{
 
         return newNoteBtn;
 
+    }
+    //all the stuff I do here has to be added to the addNote method
+    //figure something out with making this string a variable 'folder' + folderIndex + "note" + i
+    buildNoteElement(folderData, folderIndex, http, i){
+        let noteEl = document.createElement('div');
+        let noteNameEl = document.createElement('div');
+        let noteDescriptionEl = document.createElement('div');
+
+        noteEl.id = 'folder' + folderIndex + "note" + i; //ex: 'folder0note0'
+        noteEl.classList.add('note');
+
+        noteNameEl.innerHTML = folderData.notes[i].name;
+        noteNameEl.id = 'folder' + folderIndex + "note" + i + "name";
+        noteNameEl.classList.add('note-name');
+        noteDescriptionEl.innerHTML = folderData.notes[i].description;
+        noteDescriptionEl.id = 'folder' + folderIndex + "note" + i + "description";
+        noteDescriptionEl.classList.add('note-description');
+
+        //adding events for the popup to view, edit, and delete the note
+        //edit and delete events are removed when the window is closed
+        noteEl.addEventListener('click', () => {
+            document.getElementById('show-note-popup-wrapper').style.display = 'block';
+            document.getElementById('show-note-name-field').value = document.getElementById('folder' + folderIndex + "note" + i + "name").innerHTML;
+            document.getElementById('show-note-description-field').value = document.getElementById('folder' + folderIndex + "note" + i + "description").innerHTML;
+
+            document.getElementById('edit-note-submit-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                console.log('called');
+                let name = document.getElementById('show-note-name-field').value;
+                let description = document.getElementById('show-note-description-field').value;
+                http.updateNoteData('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + folderData.notes[i]._id, 'put', {name, description}, data => {return data});
+            })
+
+            document.getElementById('delete-note-submit-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                http.deleteNote('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + folderData.notes[i]._id, 'delete', {}, data => {return data});
+            })
+        })
+        noteEl.appendChild(noteNameEl);
+        noteEl.appendChild(noteDescriptionEl);
+
+        return noteEl;
     }
     toggleCurrentFolder(e){
         let notesSubContainers = document.getElementsByClassName('notes-sub-container');
@@ -230,6 +271,8 @@ class UserInterface{
         }
         document.getElementById('notes-sub-container' + e.srcElement.id.substring(6)).style.display = 'block';
     }
+    //I either want to not have methods for these, or have methods for everything else as well
+    //possibly, I could use the element id as an argument (hopefully I can use bind and it will be all okay)
     openNewFolderForm(){
         document.getElementById('new-folder-popup-wrapper').style.display = 'block';
     }

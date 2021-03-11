@@ -1,3 +1,15 @@
+
+input[type=text]{
+    background: transparent;
+    border: none;
+}
+textarea{
+    background: transparent;
+    border: none;
+    height: calc(90vh - 200px);
+    /* overflow-y: scroll; */
+}
+
 #main-content{
     
 }
@@ -37,28 +49,27 @@
 }
 .popup{
     position: fixed;
-    background-color: darkolivegreen;
+    /* background-color: darkolivegreen; */
+    background-color: white;
     width: 90%;
     height: 90%;
     top: 5%;
     left: 5%;
 }
-/* #new-folder-popup-wrapper{
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0,0,0,0.5);
-    display: none;
+.note{
+    margin-bottom: 10px;
+    border: 1px solid black;
 }
-#new-folder-popup{
-    position: fixed;
-    background-color: darkolivegreen;
-    width: 90%;
-    height: 90%;
-    top: 5%;
-    left: 5%;
-} */
+.note-name{
+    margin-left: 10px;
 
+}
+/* we will limit line height here to two or three lines */
+.note-description{
+    margin-left: 20px;
+    font-size: 10pt;
+    word-wrap: break-word;
+}
 @media only screen and (min-width: 961px) {
 /*TODO: folders sidebar will collapse when the screen is thin enough*/
     .popup{
