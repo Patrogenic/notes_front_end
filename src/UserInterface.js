@@ -24,6 +24,34 @@ class UserInterface{
             signupTab.style.backgroundColor = 'lightgrey';
         });
     }
+    toggleShowLogoutOption(){
+        if(document.getElementById('logout').style.display.localeCompare('block') === 0){
+            document.getElementById('logout').style.display = 'none';
+        }else{
+            let rect = document.getElementById('user-icon').getBoundingClientRect();
+            console.log(rect);
+            document.getElementById('logout').style.display = 'block';
+            document.getElementById('logout').style.top = rect.top + 'px';
+            document.getElementById('logout').style.left = rect.left - 110 + 'px';
+        }
+    }
+    toggleShowFolderMenu(){
+        let sidebar = document.getElementById('folders-sidebar');
+
+
+        if(sidebar.style.visibility.localeCompare('visible') === 0){
+            sidebar.style.visibility = 'hidden';
+        }else{
+            sidebar.style.visibility = 'visible';
+
+        }
+        // if(sidebar.style.animationName.localeCompare('hide-sidebar') === 0 || sidebar.style.animationName.localeCompare('') === 0){
+        //     document.getElementById('folders-sidebar').style.display = 'block';
+        //     sidebar.style.animationName = 'show-sidebar';
+        // }else{
+        //     sidebar.style.animationName = 'hide-sidebar';
+        // }
+    }
     displayAllFolderData(data, http){
         this.displayFolders(data, http);
         // this.displayNotes(data);

@@ -31,6 +31,11 @@ if(window.location.pathname.localeCompare(PATH + "login.html") === 0){
     .addEventListener('click', userInterface.openNewFolderForm);
     document.getElementById('close-new-folder-popup')
     .addEventListener('click', userInterface.closeNewFolderForm);
+    document.getElementById('logout').addEventListener('click', userLogout);
+    document.getElementById('user-icon').addEventListener('click', userInterface.toggleShowLogoutOption);
+    document.getElementById('menu-icon').addEventListener('click', userInterface.toggleShowFolderMenu);
+        
+
     
 
     document.getElementById('new-folder-form').addEventListener('submit', (e) => {
@@ -89,6 +94,8 @@ async function userLogin(url, method, parameters, callback){
 }
 function userLogout(){
     //clear token from localStorage and redirect user
+    localStorage.setItem('user', JSON.stringify(''));
+    window.location.href = 'login.html';
 }
 
 async function makeAccount(){
