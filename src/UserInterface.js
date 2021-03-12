@@ -38,23 +38,31 @@ class UserInterface{
     toggleShowFolderMenu(){
         let sidebar = document.getElementById('folders-sidebar');
 
-
         if(sidebar.style.visibility.localeCompare('visible') === 0){
             sidebar.style.visibility = 'hidden';
         }else{
             sidebar.style.visibility = 'visible';
-
         }
-        // if(sidebar.style.animationName.localeCompare('hide-sidebar') === 0 || sidebar.style.animationName.localeCompare('') === 0){
-        //     document.getElementById('folders-sidebar').style.display = 'block';
-        //     sidebar.style.animationName = 'show-sidebar';
-        // }else{
-        //     sidebar.style.animationName = 'hide-sidebar';
-        // }
     }
     displayAllFolderData(data, http){
         this.displayFolders(data, http);
         // this.displayNotes(data);
+
+        //building the dynamic event listeners
+        document.querySelectorAll('.note-container-header').forEach( header => {
+            header.addEventListener('mouseover', () => {
+                document.querySelectorAll('.folder-btn-container').forEach(btnContainer => {
+                    btnContainer.style.visibility = 'visible';
+                })
+            })
+        })
+        document.querySelectorAll('.note-container-header').forEach( header => {
+            header.addEventListener('mouseout', () => {
+                document.querySelectorAll('.folder-btn-container').forEach(btnContainer => {
+                    btnContainer.style.visibility = 'hidden';
+                })
+            })
+        })
     }
     displayFolders(data, http){
         console.log('http ' + http);
@@ -115,14 +123,16 @@ class UserInterface{
     }
     //add edit and delete buttons here
     //give each note a css class
-    addNote(noteData, folderIndex){
+    addNote(noteData, folderIndex, http){
         document.getElementById('new-note-popup-wrapper').style.display = 'none';
 
         let notesSubContainer = document.getElementById('notes-sub-container' + folderIndex);
-        let noteEl = document.createElement('div');
+
+        // buildNoteElement({notes = [noteData]}, folderIndex, http, 0);
+        // let noteEl = document.createElement('div');
         
-        noteEl.innerHTML = noteData.name;
-        notesSubContainer.appendChild(noteEl);
+        // noteEl.innerHTML = noteData.name;
+        notesSubContainer.appendChild(this.buildNoteElement({notes: [noteData]}, folderIndex, http, 0));
     }
     updateNote(noteData, elementId){
         document.getElementById(elementId + 'name').innerHTML = noteData.name;
@@ -138,6 +148,11 @@ class UserInterface{
     buildNotesContainer(folderData, folderIndex, http){ //this might be used to create just one container at a time
         let notesContainer = document.getElementById('notes-container');
         let notesSubContainer = document.createElement('div');
+        let noteHeaderContainer = document.createElement('div');
+        let notesHeaderBtns = document.createElement('div');
+
+        noteHeaderContainer.classList.add('note-container-header');
+        notesHeaderBtns.classList.add('folder-btn-container');
 
         notesSubContainer.classList.add('notes-sub-container');
         notesSubContainer.id = 'notes-sub-container' + folderIndex;
@@ -146,16 +161,20 @@ class UserInterface{
         let folderName = document.createElement('div');
         folderName.id = 'folder-name-notes-container' + folderIndex;
         folderName.innerHTML = folderData.name;
+        folderName.classList.add('note-container-name');
 
         let folderDescription = document.createElement('div');
         folderDescription.id = 'folder-description-notes-container' + folderIndex;
         folderDescription.innerHTML = folderData.description;
+        folderDescription.classList.add('note-container-description');
 
-        notesSubContainer.appendChild(folderName);
-        notesSubContainer.appendChild(this.buildFolderDeleteBtn(folderData, folderIndex, http));
-        notesSubContainer.appendChild(this.buildFolderEditBtn(folderData, folderIndex, http));
-        notesSubContainer.appendChild(this.buildCreateNoteBtn(folderData, folderIndex, http));
+        noteHeaderContainer.appendChild(folderName);
+        notesHeaderBtns.appendChild(this.buildFolderDeleteBtn(folderData, folderIndex, http));
+        notesHeaderBtns.appendChild(this.buildFolderEditBtn(folderData, folderIndex, http));
+        notesHeaderBtns.appendChild(this.buildCreateNoteBtn(folderData, folderIndex, http));
 
+        noteHeaderContainer.appendChild(notesHeaderBtns);
+        notesSubContainer.appendChild(noteHeaderContainer);
         notesSubContainer.appendChild(folderDescription);
 
         //this only needs to called once somewhere
@@ -179,18 +198,26 @@ class UserInterface{
         notesContainer.appendChild(notesSubContainer);
     }
     buildFolderDeleteBtn(folderData, folderIndex, http){
-        let deleteBtn = document.createElement('button');
-        deleteBtn.innerHTML = 'Delete';
+        let deleteBtn = document.createElement('img');
+        deleteBtn.src = './images/delete_icon.png';
         deleteBtn.id = folderIndex;
+        deleteBtn.title = 'Delete Folder';
         //solution: I will pass an array of functions to the UserInterface class for fetching data
         deleteBtn.addEventListener('click', (e) => {
-            http.deleteFolder(e, BASE_URL + '/api/folder/' + folderData._id, 'delete', {}, data => {return data})
+            if(document.getElementById('folders-container').childNodes.length === 1){
+                //reject the deletion
+                console.log('you cannot delete your last folder');
+                alert('You cannot delete your last folder');
+            }else{
+                http.deleteFolder(e, BASE_URL + '/api/folder/' + folderData._id, 'delete', {}, data => {return data})
+            }
         });
         return deleteBtn;
     }
     buildFolderEditBtn(folderData, folderIndex, http){
-        let editBtn = document.createElement('button');
-        editBtn.innerHTML = 'Edit';
+        let editBtn = document.createElement('img');
+        editBtn.src = './images/edit_icon.png';
+        editBtn.title = 'Edit Folder';
 
         //expand note to edit
         editBtn.addEventListener('click', () => {
@@ -219,8 +246,9 @@ class UserInterface{
         return editBtn;
     }
     buildCreateNoteBtn(folderData, folderIndex, http){
-        let newNoteBtn = document.createElement('button');
-        newNoteBtn.innerHTML = "New Note";
+        let newNoteBtn = document.createElement('img');
+        newNoteBtn.src = './images/add_icon.png';
+        newNoteBtn.title = "New Note";
 
         newNoteBtn.addEventListener('click' , () => {
             document.getElementById('new-note-popup-wrapper').style.display = 'block';
@@ -298,6 +326,7 @@ class UserInterface{
             notesSubContainers[i].style.display = "none";
         }
         document.getElementById('notes-sub-container' + e.srcElement.id.substring(6)).style.display = 'block';
+        document.getElementById('folders-sidebar').style.visibility = 'hidden';
     }
     //I either want to not have methods for these, or have methods for everything else as well
     //possibly, I could use the element id as an argument (hopefully I can use bind and it will be all okay)

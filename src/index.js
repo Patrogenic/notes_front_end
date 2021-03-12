@@ -20,9 +20,22 @@ if(window.location.pathname.localeCompare(PATH + "login.html") === 0){
     console.log('login page');
     document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        let username = document.getElementById('username-field').value;
-        let password = document.getElementById('password-field').value;
+        let username = document.getElementById('login-username-field').value;
+        let password = document.getElementById('login-password-field').value;
+        document.getElementById('login-username-field').value = '';
+        document.getElementById('login-password-field').value = '';
         userLogin(BASE_URL + '/api/login', 'post', {username, password}, data => {return data});
+    })
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        let username = document.getElementById('signup-username-field').value;
+        let password = document.getElementById('signup-password-field').value;
+        let password_confirmed = document.getElementById('signup-password-confirm-field').value;
+        document.getElementById('signup-username-field').value = '';
+        document.getElementById('signup-password-field').value = '';
+        document.getElementById('signup-password-confirm-field').value = ''
+        makeAccount(BASE_URL + '/api/make_account', 'post', {username, password, password_confirmed}, data => {return data});
+
     })
 }else if(window.location.pathname.localeCompare(PATH + "dashboard.html") === 0){
     getAllFoldersData();
@@ -34,9 +47,6 @@ if(window.location.pathname.localeCompare(PATH + "login.html") === 0){
     document.getElementById('logout').addEventListener('click', userLogout);
     document.getElementById('user-icon').addEventListener('click', userInterface.toggleShowLogoutOption);
     document.getElementById('menu-icon').addEventListener('click', userInterface.toggleShowFolderMenu);
-        
-
-    
 
     document.getElementById('new-folder-form').addEventListener('submit', (e) => {
         e.preventDefault();
@@ -47,6 +57,8 @@ if(window.location.pathname.localeCompare(PATH + "login.html") === 0){
 
         sendNewFolderData(BASE_URL + '/api/folder', 'post', {name, description}, data => {return data});
     })
+}else if(window.location.pathname.localeCompare(PATH + "index.html") === 0){
+    window.location.href = 'login.html';
 }
 // else if(){ //create account
 
@@ -90,6 +102,7 @@ async function userLogin(url, method, parameters, callback){
     }else{
         document.getElementById('login-response').innerHTML = 'Invalid Credentials';
         console.log('invalid credentials');
+        alert('Invalid Credentials');
     }
 }
 function userLogout(){
@@ -98,11 +111,25 @@ function userLogout(){
     window.location.href = 'login.html';
 }
 
-async function makeAccount(){
-    let data = await userData.sendData(BASE_URL + '/api/make_account', 'post', {username, password}, data => {return data});
-    console.log(data); 
-
-}
+async function makeAccount(url, method, parameters, callback){
+    let data = await userData.sendData(url, method, parameters, callback);
+    console.log(data);
+    if(data.token !== undefined){
+        localStorage.setItem('user', JSON.stringify(data));
+        window.location.href = 'dashboard.html';
+        sendNewFolderData(BASE_URL + '/api/folder', 'post', {name: 'Notes', description: ''}, data => {return data});
+    }else if(data.message.localeCompare('passwords differ') === 0){
+        //notify user that passwords differ
+        console.log('passwords differ');
+        alert('Passwords do not match')
+    }else if(data.message.localeCompare('username is taken') === 0){
+        console.log('username is taken');
+        alert('Username is already taken')
+    }else{
+        console.log('error creating new account');
+        alert('error creating new account')
+    }
+}   
 
 //maybe I can pass a function to display the data in the callback
 async function getAllFoldersData(){
@@ -153,7 +180,7 @@ async function sendNewNoteData(folderIndex, url, method, parameters, callback){
     let data = await userData.sendData(url, method, parameters, callback);
     console.log(data);
     if(data.name !== undefined){
-        userInterface.addNote(data, folderIndex);
+        userInterface.addNote(data, folderIndex, http);
     }else{
         console.log('error creating note');
     }
