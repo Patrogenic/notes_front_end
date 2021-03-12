@@ -57,8 +57,9 @@ class UserData{
     }
     sendData(url, method, parameters, callback){
         const localstorage_user = JSON.parse(localStorage.getItem('user'));
-        const inMemoryToken = localstorage_user.token || '';
-        console.log('url: ' + url);
+        if(localstorage_user !== undefined){
+            const inMemoryToken = localstorage_user.token;
+        }
 
         return (fetch(url, {
             method: method,
