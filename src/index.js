@@ -3,7 +3,7 @@ import UserData from "./UserData"
 import UserInterface from "./UserInterface"
 
 const BASE_URL = 'http://notes.patrickcs.com'; //production url
-const PATH = '';
+const PATH = '/';
 
 //I will have to put the update functions into some kind of wrapper so they can pull data from the form
 let http = {updateFolderData, deleteFolder, updateNoteData, deleteNote, sendNewNoteData};
