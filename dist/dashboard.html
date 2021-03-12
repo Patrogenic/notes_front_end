@@ -35,9 +35,9 @@
                 <div id="new-folder-header">New Folder</div>
                 <form id="new-folder-form">
                     <label for="new-folder-name">Folder name: </label><br>
-                    <input type="text" name="new-folder-name" id="new-folder-name-field" class="form-item"><br>
+                    <input type="text" name="new-folder-name" id="new-folder-name-field" placeholder="Name"><br>
                     <label for="new-folder-description">Folder description: </label><br>
-                    <textarea name="new-folder-description" id="new-folder-description-field" class="form-item"></textarea><br>
+                    <textarea name="new-folder-description" id="new-folder-description-field" placeholder="Description"></textarea><br>
                     <input type="submit" value="Submit" id="new-folder-submit-btn">
                 </form>
                 <button id="close-new-folder-popup">Close</button>
@@ -48,9 +48,9 @@
                 <div id="update-folder-header">Update Folder</div>
                 <form id="update-folder-form">
                     <label for="update-folder-name">Folder name: </label><br>
-                    <input type="text" name="update-folder-name" id="update-folder-name-field" class="form-item"><br>
+                    <input type="text" name="update-folder-name" id="update-folder-name-field"><br>
                     <label for="update-folder-description">Folder description: </label><br>
-                    <textarea name="update-folder-description" id="update-folder-description-field" class="form-item"></textarea><br>
+                    <textarea name="update-folder-description" id="update-folder-description-field"></textarea><br>
                     <input type="submit" value="Submit" id="update-folder-submit-btn">
                 </form>
                 <button id="close-update-folder-popup">Close</button>
@@ -58,25 +58,26 @@
         </div>
         <div id="new-note-popup-wrapper" class='popup-wrapper'>
             <div id="new-note-popup" class="popup">
-                <div id="new-note-header">New note</div>
+                <div id="new-note-header">
+                    <button id="close-new-note-popup">&lt Back</button>
+                    <input type="submit" value="Add" id="new-note-submit-btn">
+                </div>  
                 <form id="new-note-form">
-                    <label for="new-note-name">Note name: </label><br>
-                    <input type="text" name="new-note-name" id="new-note-name-field" class="form-item"><br>
-                    <label for="new-note-description">Note description: </label><br>
-                    <textarea name="new-note-description" id="new-note-description-field" class="form-item"></textarea><br>
-                    <input type="submit" value="Submit" id="new-note-submit-btn">
+                    <!-- <label for="new-note-name">Note name: </label><br> -->
+                    <input type="text" name="new-note-name" id="new-note-name-field" placeholder="Name"><br>
+                    <!-- <label for="new-note-description">Note description: </label><br> -->
+                    <textarea name="new-note-description" id="new-note-description-field" placeholder="Description"></textarea><br>
                 </form>
-                <button id="close-new-note-popup">Close</button>
             </div>
         </div>
         <div id="show-note-popup-wrapper" class='popup-wrapper'>
             <div id="show-note-popup" class="popup">
-                <div id="show-note-header">show note</div>
+                <div id="show-note-header"></div>
                 <form id="edit-note-form">
-                    <label for="show-note-name">Note name: </label><br>
-                    <input type="text" name="show-note-name" id="show-note-name-field" class="form-item"><br>
-                    <label for="show-note-description">Note description: </label><br>
-                    <textarea name="show-note-description" id="show-note-description-field" class="form-item"></textarea><br>
+                    <!-- <label for="show-note-name"></label><br> -->
+                    <input type="text" name="show-note-name" id="show-note-name-field" placeholder="Name"><br>
+                    <!-- <label for="show-note-description"></label><br> -->
+                    <textarea name="show-note-description" id="show-note-description-field" placeholder="Description"></textarea><br>
                     <input type="submit" value="Save Changes" id="edit-note-submit-btn">
                 </form>
                 <form id="delete-note-form">

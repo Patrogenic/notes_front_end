@@ -17,7 +17,8 @@ a{
 
 header{
     text-align: center;
-    line-height: 2;
+    /* line-height: 2; */
+    height: 50px;
     font-size: 25pt;
     border-bottom: 1pt solid black;
 }
@@ -96,6 +97,7 @@ header{
 footer{
     text-align: center;
     line-height: 2;
+    height: 30px;
 }
 
 @media only screen and (min-width: 961px) {

@@ -1,4 +1,5 @@
-const BASE_URL = 'http://notes.patrickcs.com'; //development url
+// const BASE_URL = 'http://localhost:3000'; //development url
+const BASE_URL = 'http://notes.patrickcs.com'; //production url
 class UserInterface{
     constructor(){
         
@@ -130,9 +131,9 @@ class UserInterface{
 
         // buildNoteElement({notes = [noteData]}, folderIndex, http, 0);
         // let noteEl = document.createElement('div');
+        let noteIndex = document.getElementById('notes-sub-container' + folderIndex).childNodes.length - 1;
         
-        // noteEl.innerHTML = noteData.name;
-        notesSubContainer.appendChild(this.buildNoteElement({notes: [noteData]}, folderIndex, http, 0));
+        notesSubContainer.appendChild(this.buildNoteElement(noteData, folderIndex, http, noteIndex));
     }
     updateNote(noteData, elementId){
         document.getElementById(elementId + 'name').innerHTML = noteData.name;
@@ -192,7 +193,7 @@ class UserInterface{
     
         if(folderData.notes != undefined){
             for (let i = 0; i < folderData.notes.length; i++) {
-                notesSubContainer.appendChild(this.buildNoteElement(folderData, folderIndex, http, i));         
+                notesSubContainer.appendChild(this.buildNoteElement(folderData.notes[i], folderIndex, http, i));         
             }
         }
         notesContainer.appendChild(notesSubContainer);
@@ -253,8 +254,8 @@ class UserInterface{
         newNoteBtn.addEventListener('click' , () => {
             document.getElementById('new-note-popup-wrapper').style.display = 'block';
 
-            document.getElementById('new-note-form')
-            .addEventListener('submit', (e) => {
+            document.getElementById('new-note-submit-btn')
+            .addEventListener('click', (e) => {
                 e.preventDefault();
                 let name = document.getElementById('new-note-name-field').value;
                 let description = document.getElementById('new-note-description-field').value;
@@ -263,7 +264,7 @@ class UserInterface{
 
                 http.sendNewNoteData(folderIndex, BASE_URL + '/api/folder/' + folderData._id + '/note', 'post', {name, description}, data => {return data});
                 //removes event listener from the form
-                document.getElementById('update-folder-form').outerHTML = document.getElementById('update-folder-form').outerHTML;
+                document.getElementById('new-note-submit-btn').outerHTML = document.getElementById('new-note-submit-btn').outerHTML;
             })
 
         })
@@ -279,7 +280,7 @@ class UserInterface{
     }
     //all the stuff I do here has to be added to the addNote method
     //figure something out with making this string a variable 'folder' + folderIndex + "note" + i
-    buildNoteElement(folderData, folderIndex, http, i){
+    buildNoteElement(noteData, folderIndex, http, i){
         let noteEl = document.createElement('div');
         let noteNameEl = document.createElement('div');
         let noteDescriptionEl = document.createElement('div');
@@ -287,10 +288,10 @@ class UserInterface{
         noteEl.id = 'folder' + folderIndex + "note" + i; //ex: 'folder0note0'
         noteEl.classList.add('note');
 
-        noteNameEl.innerHTML = folderData.notes[i].name;
+        noteNameEl.innerHTML = noteData.name;
         noteNameEl.id = 'folder' + folderIndex + "note" + i + "name";
         noteNameEl.classList.add('note-name');
-        noteDescriptionEl.innerHTML = folderData.notes[i].description;
+        noteDescriptionEl.innerHTML = noteData.description;
         noteDescriptionEl.id = 'folder' + folderIndex + "note" + i + "description";
         noteDescriptionEl.classList.add('note-description');
 
@@ -306,12 +307,12 @@ class UserInterface{
                 console.log('called');
                 let name = document.getElementById('show-note-name-field').value;
                 let description = document.getElementById('show-note-description-field').value;
-                http.updateNoteData('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + folderData.notes[i]._id, 'put', {name, description}, data => {return data});
+                http.updateNoteData('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + noteData._id, 'put', {name, description}, data => {return data});
             })
 
             document.getElementById('delete-note-submit-btn').addEventListener('click', (e) => {
                 e.preventDefault();
-                http.deleteNote('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + folderData.notes[i]._id, 'delete', {}, data => {return data});
+                http.deleteNote('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + noteData._id, 'delete', {}, data => {return data});
             })
         })
         noteEl.appendChild(noteNameEl);

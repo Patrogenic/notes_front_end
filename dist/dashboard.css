@@ -6,13 +6,29 @@ header{
 }
 
 input[type=text]{
+    margin-top: 5px;
     background: transparent;
     border: none;
+    font-size: 14pt;
+    margin-left: 10px;
+    width: calc(100% - 20px);
+    /* font-family: sans-serif; */
 }
+button, input[type=submit]{
+    border: none;
+    font-size: 14pt;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 textarea{
     background: transparent;
     border: none;
     height: calc(90vh - 200px);
+    font-family: sans-serif;
+    margin-left: 10px;
+    width: calc(100% - 20px);
+
     /* overflow-y: scroll; */
 }
 img{
@@ -68,7 +84,7 @@ img{
     background-color: lightcoral;
     visibility: hidden;
     position: absolute;
-    height: 100%;
+    height: calc(100% - 80px);
     width: 280px;
 
 }
@@ -92,10 +108,13 @@ img{
 }
 .note-container-header{
     margin-top: 10px;
-    margin-left: 5px;
+    margin-left: 25px;
     margin-right: 5px;
     display: flex;
     flex-wrap: wrap;
+
+    border-bottom: 1px solid black;
+
 
     /* justify-content: space-between; */
 }
@@ -103,6 +122,7 @@ img{
     /* margin-left: 20px; */
     /* margin-top: 20px; */
     font-size: 16pt;
+    font-weight: bold;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -133,20 +153,25 @@ img{
     position: fixed;
     /* background-color: darkolivegreen; */
     background-color: white;
-    width: 90%;
-    height: 90%;
-    top: 5%;
-    left: 5%;
+    width: 96%;
+    height: 96%;
+    top: 2%;
+    left: 2%;
+}
+#new-note-header{
+    display: flex;
+    justify-content: space-between;
 }
 .note{
-    margin-bottom: 10px;
-    border: 1px solid black;
-    margin-left: 20px;
+    /* margin-bottom: 10px; */
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+    margin-left: 25px;
     cursor: pointer;
 }
 .note-name{
-    margin-left: 10px;
-
+    /* margin-left: 10px; */
+    font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -155,7 +180,7 @@ img{
 }
 /* we will limit line height here to two or three lines */
 .note-description{
-    margin-left: 20px;
+    /* margin-left: 20px; */
     font-size: 10pt;
     word-wrap: break-word;
 
