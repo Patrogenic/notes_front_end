@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000'; //development url
+const BASE_URL = 'http://notes.patrickcs.com'; //development url
 class UserInterface{
     constructor(){
         
