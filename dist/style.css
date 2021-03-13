@@ -16,7 +16,9 @@ a{
 }
 
 header{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* line-height: 2; */
     height: 50px;
     font-size: 25pt;

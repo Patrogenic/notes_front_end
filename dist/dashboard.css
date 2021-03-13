@@ -20,20 +20,22 @@ button, input[type=submit]{
     background-color: transparent;
     cursor: pointer;
     color: black;
+    /* overflow: hidden; */
 }
 
-textarea{
+#show-note-description-field{
     background: transparent;
     border: none;
     font-size: 12pt;
-    height: calc(90vh - 20px);
+    height: calc(90vh - 40px);
     font-family: sans-serif;
     margin-left: 20px;
     width: calc(100% - 40px);
-    background-image:linear-gradient(rgb(51, 51, 51) 1px, transparent 1px);
-    background-size: 1px 19px;
+    /* background-image:linear-gradient(rgb(51, 51, 51) 1px, transparent 1px);
+    background-size: 1px 18px; */
     resize: none;
-    /* overflow-y: scroll; */
+    background-attachment: local;
+    overflow-y: scroll;
 }
 img{
     height: auto;

@@ -1,5 +1,5 @@
-// const BASE_URL = 'http://localhost:3000'; //development url
-const BASE_URL = 'http://notes.patrickcs.com'; //production url
+const BASE_URL = 'http://localhost:3000'; //development url
+// const BASE_URL = 'http://notes.patrickcs.com'; //production url
 class UserInterface{
     constructor(){
         
@@ -320,13 +320,13 @@ class UserInterface{
         noteEl.addEventListener('click', () => {
             document.getElementById('show-note-popup-wrapper').style.display = 'block';
             document.getElementById('show-note-name-field').value = document.getElementById('folder' + folderIndex + "note" + i + "name").innerHTML;
-            document.getElementById('show-note-description-field').value = document.getElementById('folder' + folderIndex + "note" + i + "description").innerHTML;
+            document.getElementById('show-note-description-field').innerHTML = document.getElementById('folder' + folderIndex + "note" + i + "description").innerHTML;
 
             document.getElementById('edit-note-submit-btn').addEventListener('click', (e) => {
                 e.preventDefault();
                 console.log('called');
                 let name = document.getElementById('show-note-name-field').value;
-                let description = document.getElementById('show-note-description-field').value;
+                let description = document.getElementById('show-note-description-field').innerHTML;
                 http.updateNoteData('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + noteData._id, 'put', {name, description}, data => {return data});
             })
 
