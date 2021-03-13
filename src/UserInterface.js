@@ -255,7 +255,7 @@ class UserInterface{
                 console.log(description);
                 http.updateFolderData(folderIndex, BASE_URL + '/api/folder/' + folderData._id, 'put', {name, description}, data => {return data});
                 //removes event listener from the form
-                document.getElementById('update-folder-form').outerHTML = document.getElementById('update-folder-form').outerHTML;
+                document.getElementById('update-folder-submit-btn').outerHTML = document.getElementById('update-folder-submit-btn').outerHTML;
             })
         })
         document.getElementById('close-update-folder-popup')
