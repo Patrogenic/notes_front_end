@@ -27,7 +27,7 @@ button, input[type=submit]{
     background: transparent;
     border: none;
     font-size: 12pt;
-    height: calc(82vh - 50px);
+    height: calc(75vh - 50px);
     font-family: sans-serif;
     margin-left: 20px;
     width: calc(100% - 40px);
@@ -180,7 +180,7 @@ img{
     /* background-color: darkolivegreen; */
     background-color: rgb(255, 229, 80);
     width: 96%;
-    height: calc(96vh - 50px);
+    height: calc(90vh - 50px);
     top: 2%;
     left: 2%;
     border: 1px solid black;
