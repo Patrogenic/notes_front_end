@@ -27,7 +27,7 @@ button, input[type=submit]{
     background: transparent;
     border: none;
     font-size: 12pt;
-    height: calc(90vh - 40px);
+    height: calc(84vh - 40px);
     font-family: sans-serif;
     margin-left: 20px;
     width: calc(100% - 40px);
@@ -35,7 +35,7 @@ button, input[type=submit]{
     background-size: 1px 18px; */
     resize: none;
     background-attachment: local;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 img{
     height: auto;
@@ -174,7 +174,7 @@ img{
     /* background-color: darkolivegreen; */
     background-color: rgb(255, 229, 80);
     width: 96%;
-    height: 96%;
+    height: calc(90vh);
     top: 2%;
     left: 2%;
     border: 1px solid black;
