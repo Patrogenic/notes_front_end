@@ -2,10 +2,10 @@ import ProjectList from "./ProjectList"
 import UserData from "./UserData"
 import UserInterface from "./UserInterface"
 
-const BASE_URL = 'http://localhost:3000'; //development url
-// const BASE_URL = 'http://notes.patrickcs.com'; //production url
-const PATH = '/dist/'; // development
-// const PATH = '/'; // production
+// const BASE_URL = 'http://localhost:3000'; //development url
+const BASE_URL = 'http://notes.patrickcs.com'; //production url
+// const PATH = '/dist/'; // development
+const PATH = '/'; // production
 
 
 //I will have to put the update functions into some kind of wrapper so they can pull data from the form
