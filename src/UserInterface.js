@@ -133,7 +133,7 @@ class UserInterface{
             document.getElementById('folder-description-notes-container' + folderIndex).innerHTML = folderData.description;
         }
         document.getElementById('update-folder-name-field').value = folderData.name;
-        document.getElementById('update-folder-description-field').value = folderData.description;
+        document.getElementById('update-folder-description-field').innerHTML = folderData.description;
 
 
     }
@@ -239,7 +239,7 @@ class UserInterface{
         editBtn.addEventListener('click', () => {
             document.getElementById('update-folder-name-field').value = document.getElementById('folder-name-notes-container' + folderIndex).innerHTML;
             if(document.getElementById('folder-description-notes-container' + folderIndex) !== null){
-                document.getElementById('update-folder-description-field').value = document.getElementById('folder-description-notes-container' + folderIndex).innerHTML;
+                document.getElementById('update-folder-description-field').innerHTML = document.getElementById('folder-description-notes-container' + folderIndex).innerHTML;
             }
             document.getElementById('update-folder-popup-wrapper').style.display = 'block';
 
@@ -249,7 +249,7 @@ class UserInterface{
                 let name = document.getElementById('update-folder-name-field').value;
                 let description = '';
                 if(document.getElementById('update-folder-description-field') !== null){
-                    description = document.getElementById('update-folder-description-field').value;
+                    description = document.getElementById('update-folder-description-field').innerHTML;
                 }
                 console.log(name);
                 console.log(description);
@@ -278,9 +278,9 @@ class UserInterface{
             .addEventListener('click', (e) => {
                 e.preventDefault();
                 let name = document.getElementById('new-note-name-field').value;
-                let description = document.getElementById('new-note-description-field').value;
+                let description = document.getElementById('new-note-description-field').innerHTML;
                 document.getElementById('new-note-name-field').value = '';
-                document.getElementById('new-note-description-field').value = '';
+                document.getElementById('new-note-description-field').innerHTML = '';
 
                 http.sendNewNoteData(folderIndex, BASE_URL + '/api/folder/' + folderData._id + '/note', 'post', {name, description}, data => {return data});
                 //removes event listener from the form

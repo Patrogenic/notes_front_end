@@ -10,7 +10,7 @@ input[type=text]{
     background: transparent;
     border: none;
     font-size: 14pt;
-    margin-left: 20px;
+    margin-left: 18px;
     width: calc(100% - 40px);
     /* font-family: sans-serif; */
 }
@@ -23,11 +23,11 @@ button, input[type=submit]{
     /* overflow: hidden; */
 }
 
-#show-note-description-field{
+.textarea{
     background: transparent;
     border: none;
     font-size: 12pt;
-    height: calc(84vh - 40px);
+    height: calc(82vh - 50px);
     font-family: sans-serif;
     margin-left: 20px;
     width: calc(100% - 40px);
@@ -37,6 +37,12 @@ button, input[type=submit]{
     background-attachment: local;
     overflow-y: auto;
 }
+[contenteditable][placeholder]:empty:before {
+    content: attr(placeholder);
+    position: absolute;
+    color: grey;
+    background-color: transparent;
+  }
 img{
     height: auto;
     width: auto;
@@ -174,7 +180,7 @@ img{
     /* background-color: darkolivegreen; */
     background-color: rgb(255, 229, 80);
     width: 96%;
-    height: calc(90vh);
+    height: calc(96vh - 50px);
     top: 2%;
     left: 2%;
     border: 1px solid black;
