@@ -20,21 +20,40 @@ header{
     /* line-height: 2; */
     height: 50px;
     font-size: 25pt;
-    border-bottom: 1pt solid black;
+}
+#site-title{
+    animation-name: site-load;
+    animation-duration: 2s;
 }
 #main-content{
     flex: 1;
-    background-color: lightgreen;
+    background-color: lightseagreen;
     display: flex;
     flex-wrap: wrap;
+    border-bottom: 1px black solid;
+    border-top: 1px black solid;
 }
 #site-introduction-container{
     background-color: lightblue;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 #site-introduction-text{
+    animation: site-load;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+}
+#site-introduction-heading{
+    font-size: 30pt;
     text-align: center;
-    margin: 20px 10px;
+}
+#site-introduction-caption{
+    font-size: 20pt;
+    text-align: center;
 }
 #form-header{
     border-bottom: 1px solid black;
@@ -56,6 +75,12 @@ header{
     padding: 0 40px;
     /* padding-top: 20px; */
     border: 1px solid black;
+    animation-name: site-load;
+    animation-duration: 1s;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+
 }
 #signup-form{
     display: none;
@@ -100,21 +125,24 @@ footer{
     height: 30px;
 }
 
+@keyframes site-load{
+    from{opacity: 0;}
+    to{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
 @media only screen and (min-width: 961px) {
     #site-introduction-container{
-        width: 60%;
+        width: 55%;
     }
     #site-introduction-text{
-        /* width: 40%; */
-        /* height: 200px; */
-        /* position: absolute; */
-        margin: 0;
-        /* top: calc(50% - 200px); */
-        /* left: calc(25% - 225px); */
-
+        top: calc(30% - 50px);
+        position: absolute;
     }
     #form-container{
-        width: 40%;
+        width: 45%;
     }
     #form-sub-container{
         position: relative;

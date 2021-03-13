@@ -43,7 +43,7 @@ if(window.location.pathname.localeCompare(PATH + "login.html") === 0){
 }else if(window.location.pathname.localeCompare(PATH + "dashboard.html") === 0){
     getAllFoldersData();
 
-    document.getElementById('open-new-folder-form')
+    document.getElementById('folders-sidebar-header')
     .addEventListener('click', userInterface.openNewFolderForm);
     document.getElementById('close-new-folder-popup')
     .addEventListener('click', userInterface.closeNewFolderForm);
@@ -51,8 +51,9 @@ if(window.location.pathname.localeCompare(PATH + "login.html") === 0){
     document.getElementById('user-icon').addEventListener('click', userInterface.toggleShowLogoutOption);
     document.getElementById('menu-icon').addEventListener('click', userInterface.toggleShowFolderMenu);
 
-    document.getElementById('new-folder-form').addEventListener('submit', (e) => {
+    document.getElementById('new-folder-submit-btn').addEventListener('click', (e) => {
         e.preventDefault();
+        console.log('event');
         let name = document.getElementById('new-folder-name-field').value;
         let description = document.getElementById('new-folder-description-field').value;
         document.getElementById('new-folder-name-field').value = '';

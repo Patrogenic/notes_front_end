@@ -45,11 +45,7 @@ class UserInterface{
             sidebar.style.visibility = 'visible';
         }
     }
-    displayAllFolderData(data, http){
-        this.displayFolders(data, http);
-        // this.displayNotes(data);
-
-        //building the dynamic event listeners
+    toggleShowButtons(){
         document.querySelectorAll('.note-container-header').forEach( header => {
             header.addEventListener('mouseover', () => {
                 document.querySelectorAll('.folder-btn-container').forEach(btnContainer => {
@@ -64,6 +60,21 @@ class UserInterface{
                 })
             })
         })
+    }
+    displayAllFolderData(data, http){
+        this.displayFolders(data, http);
+        // this.displayNotes(data);
+
+        //building the dynamic event listeners
+        this.toggleShowButtons();
+
+        document.getElementById('folders-sidebar-header').addEventListener('mouseover', () => {
+            document.getElementById('add-folder-icon').style.visibility = 'visible';
+        })
+        document.getElementById('folders-sidebar-header').addEventListener('mouseout', () => {
+            document.getElementById('add-folder-icon').style.visibility = 'hidden';
+        })
+        
     }
     displayFolders(data, http){
         console.log('http ' + http);
@@ -99,6 +110,7 @@ class UserInterface{
         foldersContainer.appendChild(folderEl);
 
         this.buildNotesContainer(folderData, folderIndex, http);
+        this.toggleShowButtons();
     }
     deleteFolder(e){
         let folderEl = document.getElementById('folder' + e.srcElement.id);
@@ -107,7 +119,9 @@ class UserInterface{
         folderEl.remove();
         notesSubContainer.remove();
 
-        this.toggleCurrentFolder({srcElement: {id: 'folder0'}});
+        let folderIndex = document.getElementById('folders-container').childNodes[0].id; //id of first folder
+
+        this.toggleCurrentFolder({srcElement: {id: folderIndex}});
     }
     updateFolder(folderIndex, folderData){
         document.getElementById('update-folder-popup-wrapper').style.display = 'none';
@@ -115,8 +129,9 @@ class UserInterface{
         document.getElementById('folder' + folderIndex).innerHTML = folderData.name;
         console.log(document.getElementById('folder' + folderIndex).innerHTML);
         document.getElementById('folder-name-notes-container' + folderIndex).innerHTML = folderData.name;
-        document.getElementById('folder-description-notes-container' + folderIndex).innerHTML = folderData.description;
-
+        if(document.getElementById('folder-description-notes-container' + folderIndex) !== null){
+            document.getElementById('folder-description-notes-container' + folderIndex).innerHTML = folderData.description;
+        }
         document.getElementById('update-folder-name-field').value = folderData.name;
         document.getElementById('update-folder-description-field').value = folderData.description;
 
@@ -164,10 +179,10 @@ class UserInterface{
         folderName.innerHTML = folderData.name;
         folderName.classList.add('note-container-name');
 
-        let folderDescription = document.createElement('div');
-        folderDescription.id = 'folder-description-notes-container' + folderIndex;
-        folderDescription.innerHTML = folderData.description;
-        folderDescription.classList.add('note-container-description');
+        // let folderDescription = document.createElement('div');
+        // folderDescription.id = 'folder-description-notes-container' + folderIndex;
+        // folderDescription.innerHTML = folderData.description;
+        // folderDescription.classList.add('note-container-description');
 
         noteHeaderContainer.appendChild(folderName);
         notesHeaderBtns.appendChild(this.buildFolderDeleteBtn(folderData, folderIndex, http));
@@ -176,7 +191,7 @@ class UserInterface{
 
         noteHeaderContainer.appendChild(notesHeaderBtns);
         notesSubContainer.appendChild(noteHeaderContainer);
-        notesSubContainer.appendChild(folderDescription);
+        // notesSubContainer.appendChild(folderDescription);
 
         //this only needs to called once somewhere
         //not sure where to put it, maybe the constructor
@@ -223,14 +238,19 @@ class UserInterface{
         //expand note to edit
         editBtn.addEventListener('click', () => {
             document.getElementById('update-folder-name-field').value = document.getElementById('folder-name-notes-container' + folderIndex).innerHTML;
-            document.getElementById('update-folder-description-field').value = document.getElementById('folder-description-notes-container' + folderIndex).innerHTML;
+            if(document.getElementById('folder-description-notes-container' + folderIndex) !== null){
+                document.getElementById('update-folder-description-field').value = document.getElementById('folder-description-notes-container' + folderIndex).innerHTML;
+            }
             document.getElementById('update-folder-popup-wrapper').style.display = 'block';
 
-            document.getElementById('update-folder-form')
-            .addEventListener('submit', (e) => {
+            document.getElementById('update-folder-submit-btn')
+            .addEventListener('click', (e) => {
                 e.preventDefault();
                 let name = document.getElementById('update-folder-name-field').value;
-                let description = document.getElementById('update-folder-description-field').value;
+                let description = '';
+                if(document.getElementById('update-folder-description-field') !== null){
+                    description = document.getElementById('update-folder-description-field').value;
+                }
                 console.log(name);
                 console.log(description);
                 http.updateFolderData(folderIndex, BASE_URL + '/api/folder/' + folderData._id, 'put', {name, description}, data => {return data});
@@ -313,6 +333,7 @@ class UserInterface{
             document.getElementById('delete-note-submit-btn').addEventListener('click', (e) => {
                 e.preventDefault();
                 http.deleteNote('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + noteData._id, 'delete', {}, data => {return data});
+                document.getElementById('delete-note-submit-btn').outerHTML = document.getElementById('delete-note-submit-btn').outerHTML;
             })
         })
         noteEl.appendChild(noteNameEl);

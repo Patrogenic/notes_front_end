@@ -10,8 +10,8 @@ input[type=text]{
     background: transparent;
     border: none;
     font-size: 14pt;
-    margin-left: 10px;
-    width: calc(100% - 20px);
+    margin-left: 20px;
+    width: calc(100% - 40px);
     /* font-family: sans-serif; */
 }
 button, input[type=submit]{
@@ -19,16 +19,20 @@ button, input[type=submit]{
     font-size: 14pt;
     background-color: transparent;
     cursor: pointer;
+    color: black;
 }
 
 textarea{
     background: transparent;
     border: none;
-    height: calc(90vh - 200px);
+    font-size: 12pt;
+    height: calc(90vh - 20px);
     font-family: sans-serif;
-    margin-left: 10px;
-    width: calc(100% - 20px);
-
+    margin-left: 20px;
+    width: calc(100% - 40px);
+    background-image:linear-gradient(rgb(51, 51, 51) 1px, transparent 1px);
+    background-size: 1px 19px;
+    resize: none;
     /* overflow-y: scroll; */
 }
 img{
@@ -86,13 +90,24 @@ img{
     position: absolute;
     height: calc(100% - 80px);
     width: 280px;
-
 }
 #folders-sidebar-header{
     text-align: center;
-}
-.folder{
+    border: 1px solid black;
+    margin: 5px;
     cursor: pointer;
+}
+#open-new-folder-form{
+    font-size: 16pt;
+    margin-left: 20px;
+}
+
+.folder{
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 0;
+    border-bottom: 1px solid black;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -134,7 +149,9 @@ img{
     /* visibility: hidden; */
 }
 .note-container-description{
-    margin-left: 20px;
+    margin-left: 35px;
+    padding: 5px 0;
+    border-bottom: 1px solid black;
 }
 .notes-sub-container{
     display: none;
@@ -146,19 +163,21 @@ img{
     position: fixed;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0,0,0,0.1);
     display: none;
 }
 .popup{
     position: fixed;
+    /* rgb(255, 229, 80); */
     /* background-color: darkolivegreen; */
-    background-color: white;
+    background-color: rgb(255, 229, 80);
     width: 96%;
     height: 96%;
     top: 2%;
     left: 2%;
+    border: 1px solid black;
 }
-#new-note-header{
+.popup-header{
     display: flex;
     justify-content: space-between;
 }
