@@ -104,6 +104,7 @@ class UserInterface{
     addFolder(folderData, http){
         // document.getElementById('new-folder-popup-wrapper').style.display = 'none';
         this.hidePopup('new-folder-popup-wrapper');
+        document.getElementById('new-folder-submit-btn').outerHTML = document.getElementById('new-folder-submit-btn').outerHTML;
 
         let foldersContainer = document.getElementById('folders-container');
         let folderEl = document.createElement('div');
@@ -135,6 +136,8 @@ class UserInterface{
     updateFolder(folderIndex, folderData){
         // document.getElementById('update-folder-popup-wrapper').style.display = 'none';
         this.hidePopup('update-folder-popup-wrapper');
+        document.getElementById('update-folder-submit-btn').outerHTML = document.getElementById('update-folder-submit-btn').outerHTML;
+
 
         document.getElementById('folder' + folderIndex).innerHTML = folderData.name;
         document.getElementById('folder-name-notes-container' + folderIndex).innerHTML = folderData.name;
@@ -151,6 +154,8 @@ class UserInterface{
     addNote(noteData, folderIndex, http){
         // document.getElementById('new-note-popup-wrapper').style.display = 'none';
         this.hidePopup('new-note-popup-wrapper');
+        document.getElementById('new-note-submit-btn').outerHTML = document.getElementById('new-note-submit-btn').outerHTML;
+
 
         let notesSubContainer = document.getElementById('notes-sub-container' + folderIndex);
 
@@ -272,6 +277,8 @@ class UserInterface{
         .addEventListener('click', () => {
             // document.getElementById('update-folder-popup-wrapper').style.display = 'none';
             this.hidePopup('update-folder-popup-wrapper');
+            document.getElementById('update-folder-submit-btn').outerHTML = document.getElementById('update-folder-submit-btn').outerHTML;
+            
         })
 
 
@@ -306,6 +313,8 @@ class UserInterface{
         .addEventListener('click', () => {
             // document.getElementById('new-note-popup-wrapper').style.display = 'none';
             this.hidePopup('new-note-popup-wrapper');
+        document.getElementById('new-note-submit-btn').outerHTML = document.getElementById('new-note-submit-btn').outerHTML;
+
         });
 
         return newNoteBtn;

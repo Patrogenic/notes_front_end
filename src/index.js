@@ -3,8 +3,8 @@ import UserInterface from "./UserInterface"
 
 // const BASE_URL = 'http://localhost:3000'; //development url
 const BASE_URL = 'http://notes.patrickcs.com'; //production url
-// const PATH = '/dist/'; // development
-const PATH = '/'; // production
+const PATH = '/dist/'; // development
+// const PATH = '/'; // production
 
 let http = {updateFolderData, deleteFolder, updateNoteData, deleteNote, sendNewNoteData};
 
