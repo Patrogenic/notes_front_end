@@ -30,7 +30,6 @@ class UserInterface{
             document.getElementById('logout').style.display = 'none';
         }else{
             let rect = document.getElementById('user-icon').getBoundingClientRect();
-            console.log(rect);
             document.getElementById('logout').style.display = 'block';
             document.getElementById('logout').style.top = rect.top + 'px';
             document.getElementById('logout').style.left = rect.left - 110 + 'px';
@@ -39,10 +38,12 @@ class UserInterface{
     toggleShowFolderMenu(){
         let sidebar = document.getElementById('folders-sidebar');
 
-        if(sidebar.style.visibility.localeCompare('visible') === 0){
-            sidebar.style.visibility = 'hidden';
+        if(sidebar.style.animationName.localeCompare('hide-sidebar') === 0 || sidebar.style.animationName.localeCompare('') === 0){
+            sidebar.style.animationName = 'show-sidebar';
+            sidebar.style.animationFillMode = 'forwards';
         }else{
-            sidebar.style.visibility = 'visible';
+            sidebar.style.animationName = 'hide-sidebar';
+            sidebar.style.animationFillMode = 'forwards';
         }
     }
     toggleShowButtons(){
@@ -68,6 +69,11 @@ class UserInterface{
         //building the dynamic event listeners
         this.toggleShowButtons();
 
+        document.getElementById('folders-sidebar').style.height = document.getElementById('main-content').offsetHeight + "px";
+        window.addEventListener('resize', () => {
+            document.getElementById('folders-sidebar').style.height = document.getElementById('main-content').offsetHeight + "px";
+        })
+
         document.getElementById('folders-sidebar-header').addEventListener('mouseover', () => {
             document.getElementById('add-folder-icon').style.visibility = 'visible';
         })
@@ -77,7 +83,6 @@ class UserInterface{
         
     }
     displayFolders(data, http){
-        console.log('http ' + http);
         let foldersContainer = document.getElementById('folders-container');
         let notesContainer = document.getElementById('notes-container');
 
@@ -97,12 +102,16 @@ class UserInterface{
         }
     }
     addFolder(folderData, http){
-        document.getElementById('new-folder-popup-wrapper').style.display = 'none';
+        // document.getElementById('new-folder-popup-wrapper').style.display = 'none';
+        this.hidePopup('new-folder-popup-wrapper');
 
         let foldersContainer = document.getElementById('folders-container');
         let folderEl = document.createElement('div');
-        let folderIndex = foldersContainer.childNodes.length + 1;
-        
+
+        //the new index is one more than the current highest index, and the last element will always have the highest index
+        let folderIndex = foldersContainer.childNodes[foldersContainer.childNodes.length - 1].id.substring(6);
+        folderIndex = Number.parseInt(folderIndex) + 1;
+
         folderEl.innerHTML = folderData.name;
         folderEl.id = 'folder' + folderIndex;
         folderEl.classList.add('folder');
@@ -124,10 +133,10 @@ class UserInterface{
         this.toggleCurrentFolder({srcElement: {id: folderIndex}});
     }
     updateFolder(folderIndex, folderData){
-        document.getElementById('update-folder-popup-wrapper').style.display = 'none';
+        // document.getElementById('update-folder-popup-wrapper').style.display = 'none';
+        this.hidePopup('update-folder-popup-wrapper');
 
         document.getElementById('folder' + folderIndex).innerHTML = folderData.name;
-        console.log(document.getElementById('folder' + folderIndex).innerHTML);
         document.getElementById('folder-name-notes-container' + folderIndex).innerHTML = folderData.name;
         if(document.getElementById('folder-description-notes-container' + folderIndex) !== null){
             document.getElementById('folder-description-notes-container' + folderIndex).innerHTML = folderData.description;
@@ -140,7 +149,8 @@ class UserInterface{
     //add edit and delete buttons here
     //give each note a css class
     addNote(noteData, folderIndex, http){
-        document.getElementById('new-note-popup-wrapper').style.display = 'none';
+        // document.getElementById('new-note-popup-wrapper').style.display = 'none';
+        this.hidePopup('new-note-popup-wrapper');
 
         let notesSubContainer = document.getElementById('notes-sub-container' + folderIndex);
 
@@ -197,7 +207,8 @@ class UserInterface{
         //not sure where to put it, maybe the constructor
         document.getElementById('close-show-note-popup')
         .addEventListener('click', () => {
-            document.getElementById('show-note-popup-wrapper').style.display = 'none';
+            // document.getElementById('show-note-popup-wrapper').style.display = 'none';
+            this.hidePopup('show-note-popup-wrapper');
 
             //remove event listeners when closing window
             document.getElementById('edit-note-submit-btn').outerHTML = document.getElementById('edit-note-submit-btn').outerHTML;
@@ -241,7 +252,8 @@ class UserInterface{
             if(document.getElementById('folder-description-notes-container' + folderIndex) !== null){
                 document.getElementById('update-folder-description-field').innerHTML = document.getElementById('folder-description-notes-container' + folderIndex).innerHTML;
             }
-            document.getElementById('update-folder-popup-wrapper').style.display = 'block';
+            // document.getElementById('update-folder-popup-wrapper').style.display = 'block';
+            this.showPopup('update-folder-popup-wrapper');
 
             document.getElementById('update-folder-submit-btn')
             .addEventListener('click', (e) => {
@@ -251,8 +263,6 @@ class UserInterface{
                 if(document.getElementById('update-folder-description-field') !== null){
                     description = document.getElementById('update-folder-description-field').innerHTML;
                 }
-                console.log(name);
-                console.log(description);
                 http.updateFolderData(folderIndex, BASE_URL + '/api/folder/' + folderData._id, 'put', {name, description}, data => {return data});
                 //removes event listener from the form
                 document.getElementById('update-folder-submit-btn').outerHTML = document.getElementById('update-folder-submit-btn').outerHTML;
@@ -260,7 +270,8 @@ class UserInterface{
         })
         document.getElementById('close-update-folder-popup')
         .addEventListener('click', () => {
-            document.getElementById('update-folder-popup-wrapper').style.display = 'none';
+            // document.getElementById('update-folder-popup-wrapper').style.display = 'none';
+            this.hidePopup('update-folder-popup-wrapper');
         })
 
 
@@ -272,7 +283,8 @@ class UserInterface{
         newNoteBtn.title = "New Note";
 
         newNoteBtn.addEventListener('click' , () => {
-            document.getElementById('new-note-popup-wrapper').style.display = 'block';
+            // document.getElementById('new-note-popup-wrapper').style.display = 'block';
+            this.showPopup('new-note-popup-wrapper');
 
             document.getElementById('new-note-submit-btn')
             .addEventListener('click', (e) => {
@@ -292,7 +304,8 @@ class UserInterface{
         //this only needs to be called once somewhere
         document.getElementById('close-new-note-popup')
         .addEventListener('click', () => {
-            document.getElementById('new-note-popup-wrapper').style.display = 'none';
+            // document.getElementById('new-note-popup-wrapper').style.display = 'none';
+            this.hidePopup('new-note-popup-wrapper');
         });
 
         return newNoteBtn;
@@ -318,13 +331,13 @@ class UserInterface{
         //adding events for the popup to view, edit, and delete the note
         //edit and delete events are removed when the window is closed
         noteEl.addEventListener('click', () => {
-            document.getElementById('show-note-popup-wrapper').style.display = 'block';
+            // document.getElementById('show-note-popup-wrapper').style.display = 'block';
+            this.showPopup('show-note-popup-wrapper');
             document.getElementById('show-note-name-field').value = document.getElementById('folder' + folderIndex + "note" + i + "name").innerHTML;
             document.getElementById('show-note-description-field').innerHTML = document.getElementById('folder' + folderIndex + "note" + i + "description").innerHTML;
 
             document.getElementById('edit-note-submit-btn').addEventListener('click', (e) => {
                 e.preventDefault();
-                console.log('called');
                 let name = document.getElementById('show-note-name-field').value;
                 let description = document.getElementById('show-note-description-field').innerHTML;
                 http.updateNoteData('folder' + folderIndex + "note" + i, BASE_URL + '/api/folder/note/' + noteData._id, 'put', {name, description}, data => {return data});
@@ -350,13 +363,13 @@ class UserInterface{
         document.getElementById('notes-sub-container' + e.srcElement.id.substring(6)).style.display = 'block';
         document.getElementById('folders-sidebar').style.visibility = 'hidden';
     }
-    //I either want to not have methods for these, or have methods for everything else as well
-    //possibly, I could use the element id as an argument (hopefully I can use bind and it will be all okay)
-    openNewFolderForm(){
-        document.getElementById('new-folder-popup-wrapper').style.display = 'block';
+    showPopup(elementName){
+        let popup = document.getElementById(elementName);
+        popup.style.animationName = 'show-popup';
     }
-    closeNewFolderForm(){
-        document.getElementById('new-folder-popup-wrapper').style.display = 'none';
+    hidePopup(elementName){
+        let popup = document.getElementById(elementName);
+        popup.style.animationName = 'hide-popup';
     }
 }
 

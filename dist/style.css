@@ -22,6 +22,7 @@ header{
     /* line-height: 2; */
     height: 50px;
     font-size: 25pt;
+    background-color: white;
 }
 #site-title{
     animation-name: site-load;
@@ -67,6 +68,7 @@ header{
 #form-container{
     background-color: lightcoral;
     width: 100%;
+    min-height: 280px;
 }
 #form-sub-container{
     width: 220px;
@@ -77,6 +79,8 @@ header{
     padding: 0 40px;
     /* padding-top: 20px; */
     border: 1px solid black;
+    border-radius: 20px;
+
     animation-name: site-load;
     animation-duration: 1s;
     animation-delay: 1s;
@@ -92,6 +96,8 @@ header{
     width: 100%;
     text-align: center;
     line-height: 2;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 #signup-tab:hover{
     cursor: pointer;
@@ -104,6 +110,8 @@ header{
     width: 100%;
     text-align: center;
     line-height: 2;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 #login-tab:hover{
     cursor: pointer;
@@ -122,9 +130,11 @@ header{
 }
 
 footer{
-    text-align: center;
-    line-height: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 30px;
+    background-color: white;
 }
 
 @keyframes site-load{

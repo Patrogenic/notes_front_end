@@ -12,7 +12,6 @@ input[type=text]{
     font-size: 14pt;
     margin-left: 18px;
     width: calc(100% - 40px);
-    /* font-family: sans-serif; */
 }
 button, input[type=submit]{
     border: none;
@@ -20,7 +19,6 @@ button, input[type=submit]{
     background-color: transparent;
     cursor: pointer;
     color: black;
-    /* overflow: hidden; */
 }
 
 .textarea{
@@ -31,6 +29,7 @@ button, input[type=submit]{
     font-family: sans-serif;
     margin-left: 20px;
     width: calc(100% - 40px);
+    /*this would offer repeating lines on the note, but it differs too much between browsers*/
     /* background-image:linear-gradient(rgb(51, 51, 51) 1px, transparent 1px);
     background-size: 1px 18px; */
     resize: none;
@@ -40,7 +39,8 @@ button, input[type=submit]{
 [contenteditable][placeholder]:empty:before {
     content: attr(placeholder);
     position: absolute;
-    color: grey;
+    color: black;
+    opacity: 0.5;
     background-color: transparent;
   }
 img{
@@ -76,7 +76,6 @@ img{
     max-height: 40px;
     max-width: 40px;
 
-    /* margin-left: auto; */
     margin-right: 10px;
     border-radius: 25px;
     border: 2px solid black;
@@ -96,8 +95,10 @@ img{
     background-color: lightcoral;
     visibility: hidden;
     position: absolute;
-    height: calc(100% - 80px);
     width: 280px;
+    overflow-y: auto;
+
+    animation-duration: 0.2s;
 }
 #folders-sidebar-header{
     text-align: center;
@@ -172,12 +173,14 @@ img{
     height: 100%;
     width: 100%;
     background-color: rgba(0,0,0,0.1);
-    display: none;
+    visibility: hidden;
+
+    animation-duration: 0.15s;
+    animation-fill-mode: forwards;
+
 }
 .popup{
     position: fixed;
-    /* rgb(255, 229, 80); */
-    /* background-color: darkolivegreen; */
     background-color: rgb(255, 229, 80);
     width: 96%;
     height: calc(90vh - 50px);
@@ -190,14 +193,12 @@ img{
     justify-content: space-between;
 }
 .note{
-    /* margin-bottom: 10px; */
     padding: 10px 0;
     border-bottom: 1px solid black;
     margin-left: 25px;
     cursor: pointer;
 }
 .note-name{
-    /* margin-left: 10px; */
     font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -205,9 +206,7 @@ img{
     -webkit-line-clamp: 1; /* number of lines to show */
     -webkit-box-orient: vertical;
 }
-/* we will limit line height here to two or three lines */
 .note-description{
-    /* margin-left: 20px; */
     font-size: 10pt;
     word-wrap: break-word;
 
@@ -218,28 +217,76 @@ img{
     -webkit-box-orient: vertical;
 }
 
+@keyframes show-sidebar{
+    from{
+        left: -280px;
+        visibility: hidden;
+    }
+    to{
+        left: 0;
+        visibility: visible;
+    }
+}
+@keyframes hide-sidebar{
+    from{
+        left: 0;
+        visibility: visible;
+    }
+    to{
+        left: -280px;
+        visibility: hidden;
+    }
+}
+@keyframes show-popup{
+    from{
+        opacity: 0;
+        visibility: hidden;
+    }
+    to{
+        opacity: 1;
+        visibility: visible;
+    }
+}
+@keyframes hide-popup{
+    from{
+        opacity: 1;
+        visibility: visible;
+    }
+    to{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
 @media only screen and (min-width: 961px) {
-/*TODO: folders sidebar will collapse when the screen is thin enough*/
+    @keyframes show-sidebar{
+        from{
+            left: -25%;
+            visibility: hidden;
+        }
+        to{
+            left: 0;
+            visibility: visible;
+        }
+    }
+    @keyframes hide-sidebar{
+        from{
+            left: 0;
+            visibility: visible;
+        }
+        to{
+            left: -25%;
+            visibility: hidden;
+        }
+    }
     .popup{
         position: fixed;
         width: 860px;
         left: calc(50% - 430px);
     }
-    /* #new-folder-popup{
-        position: fixed;
-        width: 860px;
-        left: calc(50% - 430px);
-    } */
-    #menu-icon{
-        /* visibility: hidden; */
-    }
     #folders-sidebar{
-        /* position: relative; */
         width: 25%;
-        height: 100%;
         background-color: lightcoral;
-        /* display: block; */
-        /* visibility: visible; */
     }
     #notes-container{
         width: 100%;

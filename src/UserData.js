@@ -4,29 +4,6 @@ class UserData{
     constructor(){
 
     }
-
-    //gets all folders and the notes inside the folders
-        //this is doing nothing
-    getAllFolders(){
-        const localstorage_user = JSON.parse(localStorage.getItem('user'));
-        const inMemoryToken = localstorage_user.token;
-
-        return (fetch('url', {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + inMemoryToken,
-            },
-        }).then(res => {
-            console.log(res);
-            return res.json();
-        }).then(json => {
-            console.log(json);
-        }))
-
-
-    }
     /*
         url: is the url to fetch,
         method: is the HTTP method,
