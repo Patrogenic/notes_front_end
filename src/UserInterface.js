@@ -1,5 +1,5 @@
 // const BASE_URL = 'http://localhost:3000'; //development url
-const BASE_URL = 'http://notes.patrickcs.com'; //production url
+const BASE_URL = 'https://notes.patrickcs.com'; //production url
 class UserInterface{
     constructor(){
         

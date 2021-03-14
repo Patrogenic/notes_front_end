@@ -2,7 +2,7 @@ import UserData from "./UserData"
 import UserInterface from "./UserInterface"
 
 // const BASE_URL = 'http://localhost:3000'; //development url
-const BASE_URL = 'http://notes.patrickcs.com'; //production url
+const BASE_URL = 'https://notes.patrickcs.com'; //production url
 const PATH = '/dist/'; // development
 // const PATH = '/'; // production
 
